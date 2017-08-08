@@ -38,4 +38,13 @@ public class BookService {
 		bookRepository.delete(existingBook);
 		return existingBook;
 	}
+
+	public Book addBook(Book book) {
+		Book existingBook = bookRepository.findOneByIsbn(book.getIsbn());
+		if (existingBook == null) {
+			return bookRepository.saveAndFlush(book);
+		}
+		existingBook.incNumberOfCopies();
+		return bookRepository.saveAndFlush(existingBook);
+	}
 }

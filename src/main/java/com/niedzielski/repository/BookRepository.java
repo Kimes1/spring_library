@@ -6,4 +6,6 @@ import com.niedzielski.model.Book;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
+	public Book findOneByIsbn(Long isbn);
+
 }

@@ -14,15 +14,17 @@ public class Book {
 	private String author;
 	private String year;
 	private String description;
+	private int numberOfCopies;
 
 	public Book() {
 	}
 
-	public Book(Long isbn, String author, String year, String description) {
+	public Book(Long isbn, String author, String year, String description, int numberOfCopies) {
 		this.isbn = isbn;
 		this.author = author;
 		this.year = year;
 		this.description = description;
+		this.numberOfCopies = numberOfCopies;
 	}
 
 	public Long getId() {
@@ -61,4 +63,15 @@ public class Book {
 		this.description = description;
 	}
 
+	public int getNumberOfCopies() {
+		return numberOfCopies;
+	}
+
+	public int incNumberOfCopies() {
+		return numberOfCopies++;
+	}
+
+	public int decNumberOfCopies() {
+		return numberOfCopies--;
+	}
 }
