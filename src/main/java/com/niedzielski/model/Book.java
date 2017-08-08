@@ -25,6 +25,10 @@ public class Book {
 		this.description = description;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public Long getIsbn() {
 		return isbn;
 	}
