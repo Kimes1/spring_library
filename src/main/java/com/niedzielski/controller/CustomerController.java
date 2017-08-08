@@ -1,4 +1,4 @@
-package com.niedzielski.service;
+package com.niedzielski.controller;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niedzielski.model.Customer;
+import com.niedzielski.service.CustomerService;
 
 @RestController
 @RequestMapping("customers")
