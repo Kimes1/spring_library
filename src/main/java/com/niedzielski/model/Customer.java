@@ -5,18 +5,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
+	@NotEmpty
+	@Size(min = 2, max = 30)
 	private String name;
+
+	@NotEmpty
+	@Size(min = 2, max = 30)
 	private String surname;
+
+	@NotEmpty
 	private String dateOfBirth;
 
+	@NotEmpty
 	@Email
 	@Column(unique = true)
 	private String email;
