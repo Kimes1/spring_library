@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.google.common.base.Objects;
 
 @Entity
-public class Customer {
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -34,10 +34,10 @@ public class Customer {
 	@Column(unique = true)
 	private String email;
 
-	public Customer() {
+	public User() {
 	}
 
-	public Customer(Long id, String name, String surname, String dateOfBirth, String email) {
+	public User(Long id, String name, String surname, String dateOfBirth, String email) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -87,7 +87,7 @@ public class Customer {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Customer other = (Customer) obj;
+		final User other = (User) obj;
 		return Objects.equal(this.id, other.id) && Objects.equal(this.name, other.name)
 				&& Objects.equal(this.surname, other.surname) && Objects.equal(this.dateOfBirth, other.dateOfBirth)
 				&& Objects.equal(this.email, other.email);

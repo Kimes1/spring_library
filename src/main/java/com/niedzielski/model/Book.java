@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.google.common.base.Objects;
 
@@ -13,10 +16,23 @@ public class Book {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotEmpty
+	@Size(min = 13, max = 13)
 	private Long isbn;
+
+	@NotEmpty
+	@Size(min = 2, max = 30)
 	private String author;
+
+	@NotEmpty
 	private String year;
+
+	@NotEmpty
+	@Size(min = 2, max = 1000)
 	private String description;
+
+	@NotEmpty
+	@Size(min = 1)
 	private int numberOfCopies;
 
 	Book() {

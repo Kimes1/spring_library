@@ -10,42 +10,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.niedzielski.model.Customer;
-import com.niedzielski.service.CustomerService;
+import com.niedzielski.model.User;
+import com.niedzielski.service.UserService;
 
 @RestController
 @RequestMapping("api")
-public class CustomerController {
+public class UserController {
 
 	@Autowired
-	private CustomerService customerService;
+	private UserService userService;
 
 	@RequestMapping(value = "customers", method = RequestMethod.GET)
-	public List<Customer> list() {
-		return customerService.getAll();
+	public List<User> list() {
+		return userService.getAll();
 	}
 
 	@RequestMapping(value = "customers", method = RequestMethod.POST)
-	public Customer create(@RequestBody Customer customer) {
-		return customerService.addCustomer(customer);
+	public User create(@RequestBody User customer) {
+		return userService.addCustomer(customer);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.GET)
-	public Customer get(@PathVariable Long id) {
-		return customerService.get(id);
+	public User get(@PathVariable Long id) {
+		return userService.get(id);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.PUT)
-	public Customer update(@PathVariable Long id, @RequestBody Customer customer) {
-		Customer existingCustomer = customerService.get(id);
+	public User update(@PathVariable Long id, @RequestBody User customer) {
+		User existingCustomer = userService.get(id);
 		BeanUtils.copyProperties(customer, existingCustomer);
-		return customerService.addCustomer(existingCustomer);
+		return userService.addCustomer(existingCustomer);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.DELETE)
-	public Customer delete(@PathVariable Long id) {
-		Customer existingCustomer = customerService.get(id);
-		customerService.delete(id);
+	public User delete(@PathVariable Long id) {
+		User existingCustomer = userService.get(id);
+		userService.delete(id);
 		return existingCustomer;
 	}
 
