@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.google.common.base.Objects;
+
 @Entity
 public class Customer {
 	@Id
@@ -79,4 +81,20 @@ public class Customer {
 		return id;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Customer other = (Customer) obj;
+		return Objects.equal(this.id, other.id) && Objects.equal(this.name, other.name)
+				&& Objects.equal(this.surname, other.surname) && Objects.equal(this.dateOfBirth, other.dateOfBirth)
+				&& Objects.equal(this.email, other.email);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.id, this.name, this.surname, this.dateOfBirth, this.email);
+	}
 }

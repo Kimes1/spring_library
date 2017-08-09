@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niedzielski.exception.CopyUnavailableException;
 import com.niedzielski.model.Book;
 import com.niedzielski.service.BookService;
 
@@ -42,10 +43,15 @@ public class BookController {
 		return bookService.create(existingBook);
 	}
 
-	@RequestMapping(value = "books/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "books{id}", method = RequestMethod.DELETE)
 	public Book delete(@PathVariable Long id) {
 		Book existingBook = bookService.get(id);
 		bookService.delete(id);
 		return existingBook;
+	}
+
+	@RequestMapping(value = "books/lend/{id}", method = RequestMethod.PUT)
+	public Book lendBook(@PathVariable Long id) throws CopyUnavailableException {
+		return bookService.lendBook(id);
 	}
 }

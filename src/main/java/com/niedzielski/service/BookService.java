@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.niedzielski.exception.CopyUnavailableException;
 import com.niedzielski.model.Book;
 import com.niedzielski.repository.BookRepository;
 
@@ -46,5 +47,14 @@ public class BookService {
 		}
 		existingBook.incNumberOfCopies();
 		return bookRepository.saveAndFlush(existingBook);
+	}
+
+	public Book lendBook(Long id) throws CopyUnavailableException {
+		Book existingBook = bookRepository.findOne(id);
+		if (existingBook.getNumberOfCopies() > 0) {
+			existingBook.decNumberOfCopies();
+			return bookRepository.saveAndFlush(existingBook);
+		}
+		throw new CopyUnavailableException("Book is not available");
 	}
 }

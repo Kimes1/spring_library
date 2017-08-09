@@ -5,18 +5,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.google.common.base.Objects;
+
 @Entity
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
 	private Long isbn;
 	private String author;
 	private String year;
 	private String description;
 	private int numberOfCopies;
 
-	public Book() {
+	Book() {
 	}
 
 	public Book(Long isbn, String author, String year, String description, int numberOfCopies) {
@@ -73,5 +76,23 @@ public class Book {
 
 	public int decNumberOfCopies() {
 		return numberOfCopies--;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Book other = (Book) obj;
+		return Objects.equal(this.id, other.id) && Objects.equal(this.isbn, other.isbn)
+				&& Objects.equal(this.author, other.author) && Objects.equal(this.year, other.year)
+				&& Objects.equal(this.description, other.description)
+				&& Objects.equal(this.numberOfCopies, other.numberOfCopies);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.id, this.isbn, this.author, this.year, this.description, this.numberOfCopies);
 	}
 }
