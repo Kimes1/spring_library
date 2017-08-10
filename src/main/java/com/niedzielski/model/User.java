@@ -1,10 +1,14 @@
 package com.niedzielski.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -15,7 +19,7 @@ import com.google.common.base.Objects;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotEmpty
@@ -33,6 +37,9 @@ public class User {
 	@Email
 	@Column(unique = true)
 	private String email;
+
+	@ManyToMany
+	private Set<Book> books = new HashSet<>();
 
 	public User() {
 	}
@@ -79,6 +86,14 @@ public class User {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void addBooks(Book book) {
+		books.add(book);
+	}
+
+	public Set<Book> getBooksByUser() {
+		return books;
 	}
 
 	@Override

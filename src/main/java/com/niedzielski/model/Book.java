@@ -1,23 +1,28 @@
 package com.niedzielski.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 
 @Entity
 public class Book {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
-	@Size(min = 13, max = 13)
+	@NotNull
 	private Long isbn;
 
 	@NotEmpty
@@ -31,19 +36,22 @@ public class Book {
 	@Size(min = 2, max = 1000)
 	private String description;
 
-	@NotEmpty
-	@Size(min = 1)
 	private int numberOfCopies;
+
+	@JsonIgnore
+	@ManyToMany
+	Set<User> users = new HashSet<>();
 
 	Book() {
 	}
 
-	public Book(Long isbn, String author, String year, String description, int numberOfCopies) {
+	public Book(Long isbn, String author, String year, String description, int numberOfCopies, HashSet<User> users) {
 		this.isbn = isbn;
 		this.author = author;
 		this.year = year;
 		this.description = description;
 		this.numberOfCopies = numberOfCopies;
+		this.users = users;
 	}
 
 	public Long getId() {
@@ -92,6 +100,14 @@ public class Book {
 
 	public int decNumberOfCopies() {
 		return numberOfCopies--;
+	}
+
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void addUsers(User user) {
+		users.add(user);
 	}
 
 	@Override

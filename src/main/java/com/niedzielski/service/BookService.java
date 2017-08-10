@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 
 import com.niedzielski.exception.CopyUnavailableException;
 import com.niedzielski.model.Book;
+import com.niedzielski.model.User;
 import com.niedzielski.repository.BookRepository;
+import com.niedzielski.repository.UserRepository;
 
 @Service
 public class BookService {
 
 	private final BookRepository bookRepository;
+	private final UserRepository userRepository;
 
 	@Autowired
-	public BookService(BookRepository bookRepository) {
+	public BookService(BookRepository bookRepository, UserRepository userRepository) {
 		this.bookRepository = bookRepository;
+		this.userRepository = userRepository;
 	}
 
 	public List<Book> getAllBooks() {
@@ -53,10 +57,13 @@ public class BookService {
 		return bookRepository.saveAndFlush(existingBook);
 	}
 
-	public Book lendBook(Long id) throws CopyUnavailableException {
+	public Book lendBook(Long id, Long userId) throws CopyUnavailableException {
 		Book existingBook = bookRepository.findOne(id);
+		User existingUser = userRepository.findOne(id);
 		if (existingBook.getNumberOfCopies() > 0) {
 			existingBook.decNumberOfCopies();
+			existingBook.addUsers(existingUser);
+			existingUser.addBooks(existingBook);
 			return bookRepository.saveAndFlush(existingBook);
 		}
 		throw new CopyUnavailableException("Book is not available");

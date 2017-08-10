@@ -11,21 +11,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.niedzielski.exception.CopyUnavailableException;
 import com.niedzielski.model.Book;
 import com.niedzielski.service.BookService;
+import com.niedzielski.service.UserService;
 
 @RestController
 @RequestMapping("api")
 public class BookController {
 
 	private final BookService bookService;
+	private final UserService userService;
 
 	@Autowired
-	public BookController(BookService bookService) {
+	public BookController(BookService bookService, UserService userService) {
 		this.bookService = bookService;
+		this.userService = userService;
 	}
 
 	@GetMapping(value = "books")
@@ -58,7 +62,9 @@ public class BookController {
 	}
 
 	@PutMapping(value = "books/lend/{id}")
-	public Book lendBook(@PathVariable Long id) throws CopyUnavailableException {
-		return bookService.lendBook(id);
+	public Book lendBook(@PathVariable Long id, @RequestParam(name = "user") Long userId)
+			throws CopyUnavailableException {
+		Long existingUserId = userService.getUser(userId).getId();
+		return bookService.lendBook(id, existingUserId);
 	}
 }
