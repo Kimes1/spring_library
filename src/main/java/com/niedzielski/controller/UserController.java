@@ -20,8 +20,12 @@ import com.niedzielski.service.UserService;
 @RequestMapping("api")
 public class UserController {
 
+	private final UserService userService;
+
 	@Autowired
-	private UserService userService;
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 
 	@GetMapping(value = "customers")
 	public List<User> list() {

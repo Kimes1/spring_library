@@ -5,15 +5,21 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niedzielski.model.User;
 import com.niedzielski.repository.UserRepository;
 
 @Service
+@Transactional
 public class UserService {
 
+	private final UserRepository userRepository;
+
 	@Autowired
-	private UserRepository userRepository;
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public List<User> getAllUsers() {
 		return userRepository.findAll();

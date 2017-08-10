@@ -21,8 +21,12 @@ import com.niedzielski.service.BookService;
 @RequestMapping("api")
 public class BookController {
 
+	private final BookService bookService;
+
 	@Autowired
-	private BookService bookService;
+	public BookController(BookService bookService) {
+		this.bookService = bookService;
+	}
 
 	@GetMapping(value = "books")
 	public List<Book> list() {
