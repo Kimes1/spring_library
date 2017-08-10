@@ -15,25 +15,25 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public List<User> getAll() {
+	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 
-	public User addCustomer(User customer) {
+	public User addUser(User customer) {
 		return userRepository.saveAndFlush(customer);
 	}
 
-	public User get(Long id) {
+	public User getUser(Long id) {
 		return userRepository.findOne(id);
 	}
 
-	public User update(Long id, User customer) {
+	public User updateUser(Long id, User customer) {
 		User existingCustomer = userRepository.findOne(id);
 		BeanUtils.copyProperties(customer, existingCustomer);
 		return userRepository.saveAndFlush(existingCustomer);
 	}
 
-	public User delete(Long id) {
+	public User deleteUser(Long id) {
 		User existingCustomer = userRepository.findOne(id);
 		userRepository.delete(existingCustomer);
 		return existingCustomer;

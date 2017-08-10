@@ -22,30 +22,30 @@ public class UserController {
 
 	@RequestMapping(value = "customers", method = RequestMethod.GET)
 	public List<User> list() {
-		return userService.getAll();
+		return userService.getAllUsers();
 	}
 
 	@RequestMapping(value = "customers", method = RequestMethod.POST)
 	public User create(@RequestBody User customer) {
-		return userService.addCustomer(customer);
+		return userService.addUser(customer);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.GET)
 	public User get(@PathVariable Long id) {
-		return userService.get(id);
+		return userService.getUser(id);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.PUT)
 	public User update(@PathVariable Long id, @RequestBody User customer) {
-		User existingCustomer = userService.get(id);
+		User existingCustomer = userService.getUser(id);
 		BeanUtils.copyProperties(customer, existingCustomer);
-		return userService.addCustomer(existingCustomer);
+		return userService.addUser(existingCustomer);
 	}
 
 	@RequestMapping(value = "customers/{id}", method = RequestMethod.DELETE)
 	public User delete(@PathVariable Long id) {
-		User existingCustomer = userService.get(id);
-		userService.delete(id);
+		User existingCustomer = userService.getUser(id);
+		userService.deleteUser(id);
 		return existingCustomer;
 	}
 

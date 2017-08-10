@@ -23,7 +23,7 @@ public class BookController {
 
 	@RequestMapping(value = "books", method = RequestMethod.GET)
 	public List<Book> list() {
-		return bookService.getAll();
+		return bookService.getAllBooks();
 	}
 
 	@RequestMapping(value = "books", method = RequestMethod.POST)
@@ -33,20 +33,20 @@ public class BookController {
 
 	@RequestMapping(value = "books/{id}", method = RequestMethod.GET)
 	public Book get(@PathVariable Long id) {
-		return bookService.get(id);
+		return bookService.getBook(id);
 	}
 
 	@RequestMapping(value = "books/{id}", method = RequestMethod.PUT)
 	public Book update(@PathVariable Long id, @RequestBody Book book) {
-		Book existingBook = bookService.get(id);
+		Book existingBook = bookService.getBook(id);
 		BeanUtils.copyProperties(book, existingBook);
-		return bookService.create(existingBook);
+		return bookService.createBook(existingBook);
 	}
 
 	@RequestMapping(value = "books{id}", method = RequestMethod.DELETE)
 	public Book delete(@PathVariable Long id) {
-		Book existingBook = bookService.get(id);
-		bookService.delete(id);
+		Book existingBook = bookService.getBook(id);
+		bookService.deleteBook(id);
 		return existingBook;
 	}
 

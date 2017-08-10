@@ -16,25 +16,25 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepository;
 
-	public List<Book> getAll() {
+	public List<Book> getAllBooks() {
 		return bookRepository.findAll();
 	}
 
-	public Book create(Book book) {
+	public Book createBook(Book book) {
 		return bookRepository.saveAndFlush(book);
 	}
 
-	public Book get(Long id) {
+	public Book getBook(Long id) {
 		return bookRepository.findOne(id);
 	}
 
-	public Book update(Long id, Book book) {
+	public Book updateBook(Long id, Book book) {
 		Book existingBook = bookRepository.findOne(id);
 		BeanUtils.copyProperties(book, existingBook);
 		return bookRepository.saveAndFlush(existingBook);
 	}
 
-	public Book delete(Long id) {
+	public Book deleteBook(Long id) {
 		Book existingBook = bookRepository.findOne(id);
 		bookRepository.delete(existingBook);
 		return existingBook;
