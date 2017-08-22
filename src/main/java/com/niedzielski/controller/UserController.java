@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niedzielski.exception.UserExistException;
 import com.niedzielski.model.User;
 import com.niedzielski.service.UserService;
 
@@ -27,29 +28,29 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	@GetMapping(value = "customers")
+	@GetMapping(value = "users")
 	public List<User> list() {
 		return userService.getAllUsers();
 	}
 
-	@PostMapping(value = "customers")
-	public User create(@RequestBody User customer) {
+	@PostMapping(value = "users")
+	public User create(@RequestBody User customer) throws UserExistException {
 		return userService.addUser(customer);
 	}
 
-	@GetMapping(value = "customers/{id}")
+	@GetMapping(value = "users/{id}")
 	public User get(@PathVariable Long id) {
 		return userService.getUser(id);
 	}
 
-	@PutMapping(value = "customers/{id}")
-	public User update(@PathVariable Long id, @RequestBody User customer) {
-		User existingCustomer = userService.getUser(id);
-		BeanUtils.copyProperties(customer, existingCustomer);
-		return userService.addUser(existingCustomer);
+	@PutMapping(value = "users/{id}")
+	public User update(@PathVariable Long id, @RequestBody User customer) throws UserExistException {
+		User existingUser = userService.getUser(id);
+		BeanUtils.copyProperties(customer, existingUser);
+		return userService.addUser(existingUser);
 	}
 
-	@DeleteMapping(value = "customers/{id}")
+	@DeleteMapping(value = "users/{id}")
 	public User delete(@PathVariable Long id) {
 		User existingCustomer = userService.getUser(id);
 		userService.deleteUser(id);

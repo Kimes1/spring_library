@@ -59,7 +59,7 @@ public class BookService {
 
 	public Book lendBook(Long id, Long userId) throws CopyUnavailableException {
 		Book existingBook = bookRepository.findOne(id);
-		User existingUser = userRepository.findOne(id);
+		User existingUser = userRepository.findOne(userId);
 		if (existingBook.getNumberOfCopies() > 0) {
 			existingBook.decNumberOfCopies();
 			existingBook.addUsers(existingUser);

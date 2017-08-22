@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 
 @Entity
@@ -21,6 +22,16 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotEmpty
+	@JsonIgnore
+	@Size(min = 2, max = 12)
+	private String username;
+
+	@NotEmpty
+	@JsonIgnore
+	@Size(min = 2, max = 12)
+	private String password;
 
 	@NotEmpty
 	@Size(min = 2, max = 30)
@@ -88,11 +99,23 @@ public class User {
 		return id;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public void addBooks(Book book) {
 		books.add(book);
 	}
 
-	public Set<Book> getBooksByUser() {
+	public Set<Book> getBooksLentByUser() {
 		return books;
 	}
 
