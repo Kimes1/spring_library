@@ -1,19 +1,19 @@
 package com.niedzielski.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.Objects;
 
 @Entity
@@ -36,22 +36,32 @@ public class Book {
 	@Size(min = 2, max = 1000)
 	private String description;
 
-	private int numberOfCopies;
+	@JsonInclude(Include.NON_NULL)
+	private LocalDate rentalDate;
 
-	@JsonIgnore
-	@ManyToMany
-	Set<User> users = new HashSet<>();
+	@JsonInclude(Include.NON_NULL)
+	private LocalDate returnDate;
+
+	@OneToOne
+	@JsonInclude(Include.NON_NULL)
+	private User user;
+
+	Status status = Status.AVAILABLE;
 
 	Book() {
 	}
 
-	public Book(Long isbn, String author, String year, String description, int numberOfCopies, HashSet<User> users) {
+	public Book(Long id, Long isbn, String author, String year, String description, LocalDate rentalDate,
+			LocalDate returnDate, User user, Status status) {
+		this.id = id;
 		this.isbn = isbn;
 		this.author = author;
 		this.year = year;
 		this.description = description;
-		this.numberOfCopies = numberOfCopies;
-		this.users = users;
+		this.rentalDate = rentalDate;
+		this.returnDate = returnDate;
+		this.user = user;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -90,24 +100,48 @@ public class Book {
 		this.description = description;
 	}
 
-	public int getNumberOfCopies() {
-		return numberOfCopies;
+	// public int getNumberOfCopies() {
+	// return numberOfCopies;
+	// }
+	//
+	// public int incNumberOfCopies() {
+	// return numberOfCopies++;
+	// }
+	//
+	// public int decNumberOfCopies() {
+	// return numberOfCopies--;
+	// }
+
+	public LocalDate getRentalDate() {
+		return rentalDate;
 	}
 
-	public int incNumberOfCopies() {
-		return numberOfCopies++;
+	public void setRentalDate(LocalDate rentalDate) {
+		this.rentalDate = rentalDate;
 	}
 
-	public int decNumberOfCopies() {
-		return numberOfCopies--;
+	public LocalDate getReturnDate() {
+		return returnDate;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public void setReturnDate(LocalDate returnDate) {
+		this.returnDate = returnDate;
 	}
 
-	public void addUsers(User user) {
-		users.add(user);
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	@Override
@@ -119,12 +153,16 @@ public class Book {
 		final Book other = (Book) obj;
 		return Objects.equal(this.id, other.id) && Objects.equal(this.isbn, other.isbn)
 				&& Objects.equal(this.author, other.author) && Objects.equal(this.year, other.year)
-				&& Objects.equal(this.description, other.description)
-				&& Objects.equal(this.numberOfCopies, other.numberOfCopies);
+				&& Objects.equal(this.description, other.description);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(this.id, this.isbn, this.author, this.year, this.description, this.numberOfCopies);
+		return Objects.hashCode(this.id, this.isbn, this.author, this.year, this.description);
 	}
+
+	public enum Status {
+		AVAILABLE, NON_AVAILABLE
+	}
+
 }

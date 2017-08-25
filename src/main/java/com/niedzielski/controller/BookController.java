@@ -62,9 +62,8 @@ public class BookController {
 	}
 
 	@PutMapping(value = "books/lend/{id}")
-	public Book lendBook(@PathVariable Long id, @RequestParam(name = "user") Long userId)
+	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String userName)
 			throws CopyUnavailableException {
-		Long existingUserId = userService.getUser(userId).getId();
-		return bookService.lendBook(id, existingUserId);
+		return bookService.rentBook(isbn, userName);
 	}
 }

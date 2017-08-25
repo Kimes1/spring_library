@@ -8,13 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 
 @Entity
@@ -24,13 +23,10 @@ public class User {
 	private Long id;
 
 	@NotEmpty
-	@JsonIgnore
 	@Size(min = 2, max = 12)
 	private String username;
 
 	@NotEmpty
-	@JsonIgnore
-	@Size(min = 2, max = 12)
 	private String password;
 
 	@NotEmpty
@@ -49,18 +45,23 @@ public class User {
 	@Column(unique = true)
 	private String email;
 
-	@ManyToMany
+	@OneToMany
 	private Set<Book> books = new HashSet<>();
 
 	public User() {
 	}
 
-	public User(Long id, String name, String surname, String dateOfBirth, String email) {
+	public User(Long id, String username, String password, String name, String surname, String dateOfBirth,
+			String email, Set<Book> books) {
+		super();
 		this.id = id;
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
+		this.books = books;
 	}
 
 	public String getName() {
@@ -111,8 +112,12 @@ public class User {
 		this.password = password;
 	}
 
-	public void addBooks(Book book) {
+	public void addBookToUserList(Book book) {
 		books.add(book);
+	}
+
+	public void removeBookFromUserList(Book book) {
+		books.remove(book);
 	}
 
 	public Set<Book> getBooksLentByUser() {

@@ -44,6 +44,10 @@ public class UserService {
 		return userRepository.findOne(id);
 	}
 
+	public User getUserByUsername(String userName) {
+		return userRepository.findOneByUsername(userName);
+	}
+
 	public User updateUser(Long id, User user) {
 		User existingUser = userRepository.findOne(id);
 		BeanUtils.copyProperties(user, existingUser);

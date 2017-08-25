@@ -6,10 +6,7 @@ import com.niedzielski.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	public User findOneByEmail(String email);
-
-	public User findOneByUsername(String username);
-
 	public User findOneByUsernameOrEmail(String email, String username);
 
+	public User findOneByUsername(String username);
 }
