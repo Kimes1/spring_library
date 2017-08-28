@@ -58,10 +58,14 @@ public class BookController {
 		return existingBook;
 	}
 
-	@PutMapping(value = "books/lend/{isbn}")
-	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String userName)
+	@PutMapping(value = "books/rent/{isbn}")
+	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String username)
 			throws CopyUnavailableException {
-		Book book = bookService.rentBook(isbn, userName);
-		return book;
+		return bookService.rentBook(isbn, username);
+	}
+
+	@PutMapping(value = "books/return/{isbn}")
+	public Book returnBook(@PathVariable Long isbn, @RequestParam(name = "user") String username) {
+		return bookService.returnBook(isbn, username);
 	}
 }
