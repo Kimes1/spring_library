@@ -35,6 +35,7 @@ public class UserController {
 
 	@PostMapping(value = "users")
 	public User create(@RequestBody User customer) throws UserExistException {
+
 		return userService.addUser(customer);
 	}
 
