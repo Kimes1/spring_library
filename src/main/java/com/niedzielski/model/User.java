@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.common.base.Objects;
 
 @Entity
@@ -46,6 +47,7 @@ public class User {
 	private String email;
 
 	@OneToMany
+	@JsonManagedReference
 	private Set<Book> books = new HashSet<>();
 
 	public User() {
@@ -120,7 +122,7 @@ public class User {
 		books.remove(book);
 	}
 
-	public Set<Book> getBooksLentByUser() {
+	public Set<Book> getBooks() {
 		return books;
 	}
 

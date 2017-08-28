@@ -17,19 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.niedzielski.exception.CopyUnavailableException;
 import com.niedzielski.model.Book;
 import com.niedzielski.service.BookService;
-import com.niedzielski.service.UserService;
 
 @RestController
 @RequestMapping("api")
 public class BookController {
 
 	private final BookService bookService;
-	private final UserService userService;
 
 	@Autowired
-	public BookController(BookService bookService, UserService userService) {
+	public BookController(BookService bookService) {
 		this.bookService = bookService;
-		this.userService = userService;
 	}
 
 	@GetMapping(value = "books")
@@ -61,9 +58,10 @@ public class BookController {
 		return existingBook;
 	}
 
-	@PutMapping(value = "books/lend/{id}")
+	@PutMapping(value = "books/lend/{isbn}")
 	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String userName)
 			throws CopyUnavailableException {
-		return bookService.rentBook(isbn, userName);
+		Book book = bookService.rentBook(isbn, userName);
+		return book;
 	}
 }

@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.google.common.base.Objects;
@@ -43,6 +44,7 @@ public class Book {
 	private LocalDate returnDate;
 
 	@OneToOne
+	@JsonBackReference
 	@JsonInclude(Include.NON_NULL)
 	private User user;
 
