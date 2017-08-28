@@ -15,7 +15,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.base.Objects;
+import com.niedzielski.serialization.LocalDateDeserializer;
+import com.niedzielski.serialization.LocalDateSerializer;
 
 @Entity
 public class Book {
@@ -37,9 +41,13 @@ public class Book {
 	@Size(min = 2, max = 1000)
 	private String description;
 
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	private LocalDate rentalDate;
 
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonInclude(Include.NON_NULL)
 	private LocalDate returnDate;
 
