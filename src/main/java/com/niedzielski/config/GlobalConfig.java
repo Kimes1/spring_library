@@ -11,4 +11,10 @@ public class GlobalConfig {
 		return new BCryptPasswordEncoder();
 	}
 
+	// @Bean
+	// public TaskScheduler taskScheduler() {
+	// return new ConcurrentTaskScheduler();
+	//
+	// }
+
 }

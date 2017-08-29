@@ -55,7 +55,7 @@ public class BookService {
 	}
 
 	public Book rentBook(Long isbn, String username) throws CopyUnavailableException {
-		Book existingBook = bookRepository.findOneByIsbnAndStatus(isbn, Status.AVAILABLE);
+		Book existingBook = bookRepository.findFirstByIsbnAndStatus(isbn, Status.AVAILABLE);
 		User existingUser = userRepository.findOneByUsername(username);
 		LocalDate rentalDate = LocalDate.now();
 

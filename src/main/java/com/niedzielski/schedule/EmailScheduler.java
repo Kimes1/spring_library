@@ -24,7 +24,7 @@ public class EmailScheduler {
 		this.emailService = emailService;
 	}
 
-	@Scheduled(cron = "* * * * * *")
+	@Scheduled(cron = "0 0 12 * * *")
 	public void sendReminders() {
 		List<Book> books = bookRepository.findByStatus(Status.NON_AVAILABLE);
 		for (Book book : books) {
@@ -35,7 +35,6 @@ public class EmailScheduler {
 			if (returnDate.plusDays(3).isAfter(currentDate)) {
 				emailService.sendSimpleMessage(book.getUser().getEmail(), subject, message);
 			}
-
 		}
 	}
 

@@ -12,12 +12,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	public Book findOneByIsbn(Long isbn);
 
-	public Book findOneByIsbnAndStatus(Long isbn, Status status);
+	public Book findFirstByIsbnAndStatus(Long isbn, Status status);
 
 	public Book findOneByIsbnAndUser(Long isbn, User user);
 
 	public List<Book> findByStatus(Status status);
-
-	public List<Book> findByIsbnAndStatus(Long isbn, Status status);
 
 }
