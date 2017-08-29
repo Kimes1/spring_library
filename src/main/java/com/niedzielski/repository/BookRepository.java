@@ -18,4 +18,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
 	public List<Book> findByStatus(Status status);
 
+	public List<Book> findByIsbnAndStatus(Long isbn, Status status);
+
 }

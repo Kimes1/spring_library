@@ -24,7 +24,7 @@ public class EmailScheduler {
 		this.emailService = emailService;
 	}
 
-	@Scheduled(cron = "0 0 12 1/1 * ? *")
+	@Scheduled(cron = "* * * * * *")
 	public void sendReminders() {
 		List<Book> books = bookRepository.findByStatus(Status.NON_AVAILABLE);
 		for (Book book : books) {
