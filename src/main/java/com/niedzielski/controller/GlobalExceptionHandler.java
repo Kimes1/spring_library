@@ -14,7 +14,7 @@ import com.niedzielski.exception.UserExistException;
 import com.niedzielski.exception.UserNotExistException;
 
 @ControllerAdvice
-public class GlobalControllerExceptionHandler {
+public class GlobalExceptionHandler {
 
 	@ExceptionHandler(CopyUnavailableException.class)
 	public ResponseEntity<Object> badRequestCopyUnavailable(Exception ex) {

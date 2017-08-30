@@ -118,18 +118,6 @@ public class Book {
 		this.description = description;
 	}
 
-	// public int getNumberOfCopies() {
-	// return numberOfCopies;
-	// }
-	//
-	// public int incNumberOfCopies() {
-	// return numberOfCopies++;
-	// }
-	//
-	// public int decNumberOfCopies() {
-	// return numberOfCopies--;
-	// }
-
 	public LocalDate getRentalDate() {
 		return rentalDate;
 	}
@@ -170,13 +158,16 @@ public class Book {
 			return false;
 		final Book other = (Book) obj;
 		return Objects.equal(this.id, other.id) && Objects.equal(this.isbn, other.isbn)
-				&& Objects.equal(this.author, other.author) && Objects.equal(this.year, other.year)
-				&& Objects.equal(this.description, other.description);
+				&& Objects.equal(this.title, other.title) && Objects.equal(this.author, other.author)
+				&& Objects.equal(this.year, other.year) && Objects.equal(this.description, other.description)
+				&& Objects.equal(this.rentalDate, other.rentalDate) && Objects.equal(this.returnDate, other.returnDate)
+				&& Objects.equal(this.user, other.user) && Objects.equal(this.status, other.status);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(this.id, this.isbn, this.author, this.year, this.description);
+		return Objects.hashCode(this.id, this.isbn, this.title, this.author, this.year, this.description,
+				this.rentalDate, this.returnDate, this.user, this.status);
 	}
 
 	public enum Status {

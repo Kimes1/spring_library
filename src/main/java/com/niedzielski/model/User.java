@@ -133,13 +133,15 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		final User other = (User) obj;
-		return Objects.equal(this.id, other.id) && Objects.equal(this.name, other.name)
+		return Objects.equal(this.id, other.id) && Objects.equal(this.username, other.username)
+				&& Objects.equal(this.name, other.name) && Objects.equal(this.password, other.password)
 				&& Objects.equal(this.surname, other.surname) && Objects.equal(this.dateOfBirth, other.dateOfBirth)
-				&& Objects.equal(this.email, other.email);
+				&& Objects.equal(this.email, other.email) && Objects.equal(this.books, other.books);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(this.id, this.name, this.surname, this.dateOfBirth, this.email);
+		return Objects.hashCode(this.id, this.username, this.password, this.name, this.surname, this.dateOfBirth,
+				this.email, this.books);
 	}
 }
