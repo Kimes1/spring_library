@@ -7,7 +7,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.niedzielski.exception.BookRentedByUserException;
 import com.niedzielski.exception.CopyUnavailableException;
+import com.niedzielski.exception.UserNotExistException;
 import com.niedzielski.model.Book;
 import com.niedzielski.model.Book.Status;
 import com.niedzielski.model.User;
@@ -54,14 +56,25 @@ public class BookService {
 		return bookRepository.saveAndFlush(book);
 	}
 
-	public Book rentBook(Long isbn, String username) throws CopyUnavailableException {
+	public Book rentBook(Long isbn, String username)
+			throws CopyUnavailableException, BookRentedByUserException, UserNotExistException {
 		Book existingBook = bookRepository.findFirstByIsbnAndStatus(isbn, Status.AVAILABLE);
 		User existingUser = userRepository.findOneByUsername(username);
+		Book rentedBook = bookRepository.findOneByIsbnAndUser(isbn, existingUser);
 		LocalDate rentalDate = LocalDate.now();
 
-		if (existingBook == null) {
-			throw new CopyUnavailableException("Book is not available");
+		if (existingUser == null) {
+			throw new UserNotExistException("This user does not exist");
 		}
+
+		if (existingBook == null) {
+			throw new CopyUnavailableException("Book is out of stock");
+		}
+
+		if (rentedBook != null) {
+			throw new BookRentedByUserException("This book is already rented by this user");
+		}
+
 		existingBook.setUser(existingUser);
 		existingBook.setRentalDate(rentalDate);
 		existingBook.setReturnDate(rentalDate.plusMonths(1));
@@ -72,13 +85,18 @@ public class BookService {
 
 	}
 
-	public Book returnBook(Long isbn, String username) {
+	public Book returnBook(Long isbn, String username) throws UserNotExistException {
 		User existingUser = userRepository.findOneByUsername(username);
 		Book existingBook = bookRepository.findOneByIsbnAndUser(isbn, existingUser);
+
+		if (existingUser == null) {
+			throw new UserNotExistException("This user does not exist");
+		}
 
 		existingBook.setStatus(Status.AVAILABLE);
 		existingBook.setRentalDate(null);
 		existingBook.setReturnDate(null);
+		existingBook.setUser(null);
 		existingUser.removeBookFromUserList(existingBook);
 
 		return bookRepository.saveAndFlush(existingBook);

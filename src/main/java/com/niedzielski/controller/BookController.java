@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.niedzielski.exception.BookRentedByUserException;
 import com.niedzielski.exception.CopyUnavailableException;
+import com.niedzielski.exception.UserNotExistException;
 import com.niedzielski.model.Book;
 import com.niedzielski.service.BookService;
 
@@ -60,12 +62,13 @@ public class BookController {
 
 	@PutMapping(value = "books/rent/{isbn}")
 	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String username)
-			throws CopyUnavailableException {
+			throws CopyUnavailableException, BookRentedByUserException, UserNotExistException {
 		return bookService.rentBook(isbn, username);
 	}
 
 	@PutMapping(value = "books/return/{isbn}")
-	public Book returnBook(@PathVariable Long isbn, @RequestParam(name = "user") String username) {
+	public Book returnBook(@PathVariable Long isbn, @RequestParam(name = "user") String username)
+			throws UserNotExistException {
 		return bookService.returnBook(isbn, username);
 	}
 }

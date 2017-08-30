@@ -31,6 +31,9 @@ public class Book {
 	private Long isbn;
 
 	@NotEmpty
+	private String title;
+
+	@NotEmpty
 	@Size(min = 2, max = 30)
 	private String author;
 
@@ -61,10 +64,11 @@ public class Book {
 	Book() {
 	}
 
-	public Book(Long id, Long isbn, String author, String year, String description, LocalDate rentalDate,
+	public Book(Long id, Long isbn, String title, String author, String year, String description, LocalDate rentalDate,
 			LocalDate returnDate, User user, Status status) {
 		this.id = id;
 		this.isbn = isbn;
+		this.title = title;
 		this.author = author;
 		this.year = year;
 		this.description = description;
@@ -84,6 +88,10 @@ public class Book {
 
 	public void setIsbn(Long isbn) {
 		this.isbn = isbn;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	public String getAuthor() {
