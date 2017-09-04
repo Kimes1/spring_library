@@ -55,7 +55,6 @@ public class User {
 
 	public User(Long id, String username, String password, String name, String surname, String dateOfBirth,
 			String email, Set<Book> books) {
-		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;

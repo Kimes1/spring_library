@@ -61,7 +61,7 @@ public class Book {
 
 	Status status = Status.AVAILABLE;
 
-	Book() {
+	public Book() {
 	}
 
 	public Book(Long id, Long isbn, String title, String author, String year, String description, LocalDate rentalDate,
@@ -80,6 +80,10 @@ public class Book {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getIsbn() {
@@ -159,15 +163,15 @@ public class Book {
 		final Book other = (Book) obj;
 		return Objects.equal(this.id, other.id) && Objects.equal(this.isbn, other.isbn)
 				&& Objects.equal(this.title, other.title) && Objects.equal(this.author, other.author)
-				&& Objects.equal(this.year, other.year) && Objects.equal(this.description, other.description)
-				&& Objects.equal(this.rentalDate, other.rentalDate) && Objects.equal(this.returnDate, other.returnDate)
-				&& Objects.equal(this.user, other.user) && Objects.equal(this.status, other.status);
+				&& Objects.equal(this.year, other.year) && Objects.equal(this.description, other.description);
+//				&& Objects.equals(this.rentalDate, other.rentalDate) && Objects.equals(this.returnDate, other.returnDate)
+//				&& Objects.equals(this.user, other.user) && Objects.equals(this.status, other.status);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(this.id, this.isbn, this.title, this.author, this.year, this.description,
-				this.rentalDate, this.returnDate, this.user, this.status);
+		return Objects.hashCode(this.id, this.isbn, this.title, this.author, this.year, this.description);
+//				this.rentalDate, this.returnDate, this.user, this.status);
 	}
 
 	public enum Status {

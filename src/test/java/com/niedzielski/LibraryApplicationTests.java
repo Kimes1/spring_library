@@ -1,4 +1,4 @@
-package com.niedzielski.library;
+package com.niedzielski;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
