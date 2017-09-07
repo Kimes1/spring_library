@@ -2,7 +2,6 @@ package com.niedzielski.controller;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +47,8 @@ public class BookController {
 
 	@PutMapping(value = "books/{id}")
 	public Book update(@PathVariable Long id, @RequestBody Book book) {
-		Book existingBook = bookService.getBook(id);
-		BeanUtils.copyProperties(book, existingBook);
-		return bookService.createBook(existingBook);
+		
+		return bookService.updateBook(id, book);
 	}
 
 	@DeleteMapping(value = "books{id}")

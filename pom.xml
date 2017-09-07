@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>19.0</version>
+			<version>21.0</version>
 		</dependency>
 
 		<dependency>
@@ -75,7 +75,18 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.2.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.google.truth</groupId>
+			<artifactId>truth</artifactId>
+			<version>0.35</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.truth.extensions</groupId>
+			<artifactId>truth-java8-extension</artifactId>
+			<version>0.32</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

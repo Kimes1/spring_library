@@ -42,7 +42,8 @@ public class BookService {
 
 	public Book updateBook(Long id, Book book) {
 		Book existingBook = bookRepository.findOne(id);
-		BeanUtils.copyProperties(book, existingBook);
+		BeanUtils.copyProperties(book, existingBook, "id");
+		
 		return bookRepository.saveAndFlush(existingBook);
 	}
 

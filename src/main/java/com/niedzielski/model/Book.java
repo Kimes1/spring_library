@@ -64,9 +64,8 @@ public class Book {
 	public Book() {
 	}
 
-	public Book(Long id, Long isbn, String title, String author, String year, String description, LocalDate rentalDate,
+	public Book(Long isbn, String title, String author, String year, String description, LocalDate rentalDate,
 			LocalDate returnDate, User user, Status status) {
-		this.id = id;
 		this.isbn = isbn;
 		this.title = title;
 		this.author = author;
@@ -96,6 +95,10 @@ public class Book {
 
 	public String getTitle() {
 		return title;
+	}
+	
+	public String setTitle(String title) {
+		return this.title = title;
 	}
 
 	public String getAuthor() {
@@ -177,5 +180,6 @@ public class Book {
 	public enum Status {
 		AVAILABLE, NON_AVAILABLE
 	}
+
 
 }
