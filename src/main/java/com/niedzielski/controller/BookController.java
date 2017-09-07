@@ -51,7 +51,7 @@ public class BookController {
 		return bookService.updateBook(id, book);
 	}
 
-	@DeleteMapping(value = "books{id}")
+	@DeleteMapping(value = "books/{id}")
 	public Book delete(@PathVariable Long id) {
 		Book existingBook = bookService.getBook(id);
 		bookService.deleteBook(id);
@@ -59,13 +59,13 @@ public class BookController {
 	}
 
 	@PutMapping(value = "books/rent/{isbn}")
-	public Book lendBook(@PathVariable Long isbn, @RequestParam(name = "user") String username)
+	public Book rentBook(@PathVariable Long isbn, @RequestParam(name = "username") String username)
 			throws CopyUnavailableException, BookRentedByUserException, UserNotExistException {
 		return bookService.rentBook(isbn, username);
 	}
 
 	@PutMapping(value = "books/return/{isbn}")
-	public Book returnBook(@PathVariable Long isbn, @RequestParam(name = "user") String username)
+	public Book returnBook(@PathVariable Long isbn, @RequestParam(name = "username") String username)
 			throws UserNotExistException {
 		return bookService.returnBook(isbn, username);
 	}
