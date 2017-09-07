@@ -12,6 +12,7 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -25,9 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.niedzielski.LibraryApplication;
 import com.niedzielski.model.Book;
 import com.niedzielski.model.Book.Status;
-import com.niedzielski.model.User;
 import com.niedzielski.repository.BookRepository;
 import com.niedzielski.repository.UserRepository;
+import com.niedzielski.service.BookService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = LibraryApplication.class)
@@ -47,6 +48,10 @@ public class BookControllerTest {
 	
 	@Autowired
 	private ObjectMapper mapper;
+	
+	@Mock
+	@Autowired
+	private BookService bookService;
 
 	@Before
 	public void setup() {
@@ -59,6 +64,8 @@ public class BookControllerTest {
 		Book bookToTest = new Book(1L, "testTitle", "testAuthor", "testYear", "testDescription", null, null, null,
 				Status.AVAILABLE);
 		Book savedBook = bookRepository.saveAndFlush(bookToTest);
+//		bookToTest.setId(1L);
+//		Mockito.when(bookService.getBook(1L)).thenReturn(bookToTest);
 
 		mockMvc.perform(get("/api/books/" + savedBook.getId()))
 				.andExpect(status().isOk())
@@ -178,20 +185,20 @@ public class BookControllerTest {
 		assertThat(deletedBook).isNull();
 	}
 	
-	@Test
-	public void rentBookByIsbnTest() throws Exception {
-		Book bookToTest = new Book(8L, "testTitle", "testAuthor", "testYear", "testDescription", 
-				null, null, null, Status.AVAILABLE);
-		User testUser = new User("testUsername", "testPassword", "testName", "testSurname", 
-				"testDateOfBirth", "test@email.com", null);
-		
-		bookRepository.saveAndFlush(bookToTest);
-		userRepository.saveAndFlush(testUser);
-		
-		
-		mockMvc.perform(put("/api/books/rent/" + bookToTest.getIsbn())
-				.param("username", testUser.getUsername()))
-				.andExpect(jsonPath("$.isbn", Matchers.is(8)))
-				.andExpect(status().isOk());
-	}
+//	@Test
+//	public void rentBookByIsbnTest() throws Exception {
+//		Book bookToTest = new Book(8L, "testTitle", "testAuthor", "testYear", "testDescription", 
+//				null, null, null, Status.AVAILABLE);
+//		User testUser = new User("testUsername", "testPassword", "testName", "testSurname", 
+//				"testDateOfBirth", "test@email.com", null);
+//		
+//		bookRepository.saveAndFlush(bookToTest);
+//		userRepository.saveAndFlush(testUser);
+//		
+//		
+//		mockMvc.perform(put("/api/books/rent/" + bookToTest.getIsbn())
+//				.param("username", testUser.getUsername()))
+//				.andExpect(jsonPath("$.isbn", Matchers.is(8)))
+//				.andExpect(status().isOk());
+//	}
 }
